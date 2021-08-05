@@ -20,6 +20,7 @@ e.py - scan omg.json for newly discovered puzzle
 config.json - (hopefully not included) - just contains the token to a discord bot
 
 distribution.py - parse data and generate encounter location distribution histograms for each problem; upload histograms to a discord channel
+distribution_fake.py - for newly discovered puzzles without data saved, generate a fake distribution based on winrate
 
 getRush.json - master list of all already-discovered discovered puzzles
 getRushNew.json - newly discovered puzzles from a particular passthrough, relative to the master list
