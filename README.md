@@ -33,3 +33,7 @@ stuff2.js - process getRush.json and generate out.csv of puzzle details
 trivia2.py - categorize puzzles into winrate range buckets (difficulty categories)
 
 upload_solutions.js - upload solutions.txt to discord, formatted
+
+------------------------
+
+btw it is known that 372 was adjusted. Manually renamed the old 372 to 3720 and added the new 372
