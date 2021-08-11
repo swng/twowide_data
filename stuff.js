@@ -177,7 +177,7 @@ function toFumenString(board) {
 	return result;
 }
 
-function messageI(i) {
+async function messageI(i) {
     board = data[i]['board'];
 
     const pages = [];
@@ -199,7 +199,7 @@ function messageI(i) {
     details += 'Goal: ' + data[i]['goals']['lines_sent'] + ' lines' + '\n';
     details += 'Fumen: ' + 'https://harddrop.com/fumen/?' + fumen;
 
-    client.channels.cache.get('869265298421842010').send(details, { files: ['./output.png'] });
+    await client.channels.cache.get('869265298421842010').send(details, { files: ['./output.png'] });
 
     console.log(i, data[i]['id']);
 }
@@ -208,18 +208,13 @@ let rawdata = fs.readFileSync('getRushNew.json');
 let data = JSON.parse(rawdata);
 
 
-let jsonData = require('./temp.json'); // using temp.json to track and update the ID of the puzzle to upload
-index = jsonData["temp"]; // was unable to upload all at once, zzzz kinda dumb
-index++;
-jsonData["temp"] = index;
-fs.writeFileSync('temp.json', JSON.stringify(jsonData));
-
-
 
 const client = new Discord.Client();
 
-client.once('ready', () => {
-    messageI(index);
+client.once('ready', async () => {
+    for (let index = 0; index < data.length; index++) {
+        await messageI(index);
+    }
 });
 
 client.login(token);

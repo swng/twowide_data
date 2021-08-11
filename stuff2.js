@@ -43,6 +43,10 @@ function toFumenString(board) {
 	return result;
 }
 
+function toQueueString(hold, queue) {
+    return `#Q=[${hold}](${queue[0]})${queue.slice(1).join('')}`;
+}
+
 let rawdata = fs.readFileSync('getRush.json');
 let data = JSON.parse(rawdata);
 
@@ -64,17 +68,20 @@ for (i = 0; i < data.length; i++) {
     }
 
     board = data[i]['board'];
+    q = toQueueString(data[i]['held'], data[i]['pieces']);
     
     const pages = [];
-	pages.push({
-		field: Field.create(toFumenString(board)),
-	});
+    pages.push({
+        field: Field.create(toFumenString(board)),
+        comment: toQueueString(data[i]['held'], data[i]['pieces']),
+        flags: {
+            quiz: true,
+          },
+    });
     fumen = encoder.encode(pages);
 
     temp = {
         id: data[i]['id'],
-        pieces: data[i]['pieces'],
-        hold: data[i]['held'],
         goal: data[i]['goals']['lines_sent'],
         fumen: 'https://harddrop.com/fumen/?' + fumen,
         solution: "?"
@@ -91,8 +98,6 @@ const csvWriter = createCsvWriter({
 	path: 'out.csv',
 	header: [
 		{ id: 'id', title: 'ID' },
-		{ id: 'pieces', title: 'Pieces' },
-		{ id: 'hold', title: 'Hold' },
 		{ id: 'goal', title: 'Goal' },
         { id: 'fumen', title: 'Fumen' },
         { id: 'solution', title: 'Solution' },

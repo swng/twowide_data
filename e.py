@@ -43,7 +43,7 @@ print(len(new))
 combined.sort(key = lambda x: x["id"])
 
 temp = [x["id"] for x in combined]
-print(sorted(list(set([x for x in range(422)]) - set(temp))))
+print(sorted(list(set([x for x in range(423)]) - set(temp))))
 
 
 json.dump(combined, open('getRush.json','w'))
