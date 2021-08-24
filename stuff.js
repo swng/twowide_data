@@ -199,7 +199,8 @@ async function messageI(i) {
     details += 'Goal: ' + data[i]['goals']['lines_sent'] + ' lines' + '\n';
     details += 'Fumen: ' + 'https://harddrop.com/fumen/?' + fumen;
 
-    await client.channels.cache.get('869265298421842010').send(details, { files: ['./output.png'] });
+    await client.channels.cache.get('869265298421842010').send({content: details, files: ['./output.png'] });
+	
 
     console.log(i, data[i]['id']);
 }
@@ -209,7 +210,8 @@ let data = JSON.parse(rawdata);
 
 
 
-const client = new Discord.Client();
+const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
+
 
 client.once('ready', async () => {
     for (let index = 0; index < data.length; index++) {
