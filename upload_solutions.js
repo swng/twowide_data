@@ -140,19 +140,21 @@ function drawFumens(fumenPages, tilesize, numrows, start, end, transparent) {
 
 
 
-function messageI(i) {
+async function messageI(i) {
     if (lines[i] != '') {
-        client.channels.cache.get('869693417335169065').send('ID: ' + i + '\n' + 'Solution: ' + lines[i]);
         var fumen = lines[i];
         var pages = decoder.decode(fumen);
 
         var outputfile = 'SPOILER_output.gif';
 
         gif = drawFumens(pages, 22, undefined, 0, undefined, true);
-        gif.createReadStream().pipe(fs.createWriteStream(outputfile));
-        gif.finish();
+        await gif.createReadStream().pipe(fs.createWriteStream(outputfile));
+        await gif.finish();
 
-        client.channels.cache.get('869693417335169065').send({ files: ['./SPOILER_output.gif'] });
+        
+		await new Promise(resolve => setTimeout(resolve, 5000));
+		await client.channels.cache.get('876196782315544596').send('ID: ' + i + '\n' + 'Solution: ' + lines[i]);
+		await client.channels.cache.get('876196782315544596').send({ files: ['./SPOILER_output.gif'] });
 
     }
     console.log(i);
@@ -161,28 +163,25 @@ function messageI(i) {
 
 
 
-const client = new Discord.Client();
+const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
 
 
 var lineReader = require('readline').createInterface({
     input: require('fs').createReadStream('solutions.txt')
 });
 
-lines = ["abc"]
+lines = []
 
 lineReader.on('line', function (line) {
     lines.push(line);
 });
 
-let jsonData = require('./temp.json');
-index = jsonData["temp"];
-index++;
-jsonData["temp"] = index;
-fs.writeFileSync('temp.json', JSON.stringify(jsonData));
 
-
-client.once('ready', () => {
-    messageI(index);
+client.once('ready', async () => {
+	for(let index = 350; index < 400; index++) {
+		await messageI(index);
+	}
+    	
 });
 
 

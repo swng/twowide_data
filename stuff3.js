@@ -212,7 +212,7 @@ let data = JSON.parse(rawdata);
 
 
 
-const client = new Discord.Client();
+const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
 
 client.on('ready', async () => {
     for (let index = 0; index < 422; index++) {
