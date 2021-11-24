@@ -30,10 +30,12 @@ solutions.txt - manually curated fumens of puzzle solutions
 
 stuff.js - process getRushNew.json and post puzzle details to discord
 stuff2.js - process getRush.json and generate out.csv of puzzle details
+stuff3.js - process getRush.json and upload all puzzle details to discord (significantly better than stuff.js)
 
 trivia2.py - categorize puzzles into winrate range buckets (difficulty categories)
 
 upload_solutions.js - upload solutions.txt to discord, formatted
+new_upload_solutions.js - upload solutions.txt, multiple at a time
 
 ------------------------
 
@@ -42,3 +44,5 @@ btw it is known that 372 was adjusted. Manually renamed the old 372 to 3720 and 
 also 71 was adjusted
 ------------
 also figured out some async stuff and also some fumen queue stuff. Too lazy to properly document changes, just pushing changes now (8/11) ok bye
+----------
+Update (11/24) - Discovered final? unknown puzzles, updated 393, some other stuff. Project should be almost finalized now.

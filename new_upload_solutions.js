@@ -1,6 +1,4 @@
-// oh my god I got async working I can actually do multiple at once thank god
-// process getRush.json and post puzzle details to discord
-// image generation code stolen from fumen-canvas
+// upload multiple solutions
 
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
@@ -8,6 +6,7 @@ const { prefix, token } = require('./config.json');
 const { createCanvas } = require('canvas');
 const { decoder } = require('tetris-fumen');
 const fs = require('fs');
+readline = require('readline');
 
 const { encoder, Field } = require('tetris-fumen');
 
@@ -141,84 +140,51 @@ function drawFumens(fumenPages, tilesize, numrows, start, end, transparent) {
 	return encoder;
 }
 
-function toFumenString(board) {
-	result = '';
-	for (let row = 0; row < board.length; row++) {
-		for (let col = 0; col < board[row].length; col++) {
-			a = board[row][col];
-			if (a == 0 || a == '0') {
-				result += '_';
-			}
-			if (a == 1 || a == '1') {
-				result += 'Z';
-			}
-			if (a == 2 || a == '2') {
-				result += 'L';
-			}
-			if (a == 3 || a == '3') {
-				result += 'O';
-			}
-			if (a == 4 || a == '4') {
-				result += 'S';
-			}
-			if (a == 5 || a == '5') {
-				result += 'I';
-			}
-			if (a == 6 || a == '6') {
-				result += 'J';
-			}
-			if (a == 7 || a == '7') {
-				result += 'T';
-			}
-			if (a == 8 || a == '8') {
-				result += 'X';
-			}
-		}
-	}
-	return result;
-}
+
 
 async function messageI(i) {
-    board = data[i]['board'];
+    if (lines[i] != '') {
+        await client.channels.cache.get('913050728598229054').send('ID: ' + i + '\n' + 'Solution: ' + lines[i]);
+        var fumen = lines[i];
+        var pages = decoder.decode(fumen);
 
-    const pages = [];
-    pages.push({
-        field: Field.create(toFumenString(board)),
-    });
-    fumen = encoder.encode(pages);
+        var outputfile = 'SPOILER_output.gif';
 
-    var outputfile = 'output.png';
+        gif = drawFumens(pages, 22, undefined, 0, undefined, true);
+        gif.createReadStream().pipe(fs.createWriteStream(outputfile));
+        gif.finish();
 
-    var canvas = draw(pages[0], 22, undefined, true);
-    var buffer = canvas.toBuffer('image/png');
-    fs.writeFileSync(outputfile, buffer);
+        await client.channels.cache.get('913050728598229054').send({ files: ['./SPOILER_output.gif'] });
 
-    details = '';
-    details += 'ID: ' + data[i]['id'] + '\n';
-    details += 'Pieces: ' + data[i]['pieces'] + '\n';
-    details += 'Hold: ' + data[i]['held'] + '\n';
-    details += 'Goal: ' + data[i]['goals']['lines_sent'] + ' lines' + '\n';
-    details += 'Fumen: ' + 'https://harddrop.com/fumen/?' + fumen;
-
-    await client.channels.cache.get('913025925195644989').send(details, { files: ['./output.png'] });
-
-    console.log(i, data[i]['id']);
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    console.log(i);
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    
 }
-
-let rawdata = fs.readFileSync('getRush.json');
-let data = JSON.parse(rawdata);
 
 
 
 const client = new Discord.Client();
 
-client.on('ready', async () => {
-    for (let index = 0; index < 422; index++) {
+
+var lineReader = require('readline').createInterface({
+    input: require('fs').createReadStream('solutions.txt')
+});
+
+lines = []
+
+lineReader.on('line', function (line) {
+    lines.push(line);
+});
+
+
+client.once('ready', async () => {
+    for (let index = 400; index < 422; index++) {
         await messageI(index);
     }
 });
+
+
 
 client.login(token);
 

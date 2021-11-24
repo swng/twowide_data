@@ -24,6 +24,7 @@ def not_in(puzzle, combined): # dedicated function instead of just using "in" op
         if match_id == id:
             return False
 
+    print(id)
     return True
 
 
