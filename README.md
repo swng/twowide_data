@@ -40,9 +40,12 @@ new_upload_solutions.js - upload solutions.txt, multiple at a time
 ------------------------
 
 btw it is known that 372 was adjusted. Manually renamed the old 372 to 3720 and added the new 372
+
 -----------
 also 71 was adjusted
+
 ------------
 also figured out some async stuff and also some fumen queue stuff. Too lazy to properly document changes, just pushing changes now (8/11) ok bye
+
 ----------
 Update (11/24) - Discovered final? unknown puzzles, updated 393, some other stuff. Project should be almost finalized now.
