@@ -179,7 +179,7 @@ lineReader.on('line', function (line) {
 
 
 client.once('ready', async () => {
-    for (let index = 400; index < 422; index++) {
+    for (let index = 422; index < 423; index++) {
         await messageI(index);
     }
 });

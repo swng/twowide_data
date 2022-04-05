@@ -52,7 +52,7 @@ let data = JSON.parse(rawdata);
 
 processed = []
 last = 0;
-for (i = 0; i < 422; i++) {
+for (i = 0; i < 423; i++) {
 
     board = data[i]['board'];
     q = toQueueString(data[i]['held'], data[i]['pieces']);

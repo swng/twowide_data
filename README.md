@@ -49,3 +49,6 @@ also figured out some async stuff and also some fumen queue stuff. Too lazy to p
 
 ----------
 Update (11/24) - Discovered final? unknown puzzles, updated 393, some other stuff. Project should be almost finalized now.
+
+---------
+Update (4/5/22) - added 422

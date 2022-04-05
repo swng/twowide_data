@@ -4,7 +4,7 @@ import requests
 import json
 import time
 
-search = [13, 422] # list of IDs not yet discovered
+search = [422] # list of IDs not yet discovered
 
 for i in range(100): # request 100 rushes and scan each for undiscovered IDs. Output to omg.json and quit if found.
     response = requests.get("https://twowi.de/getRush")
